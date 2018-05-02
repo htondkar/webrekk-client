@@ -3,6 +3,7 @@ import Table from 'grommet/components/Table'
 import TableRow from 'grommet/components/TableRow'
 import { ICustomer, genderDict } from '../../../../models/Customer'
 import TableHeader from 'grommet/components/TableHeader'
+// import EditIcon from 'grommet/components/icons/base/Edit'
 
 type CustomersOverviewProps = {
   list: ICustomer[]

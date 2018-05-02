@@ -1,3 +1,4 @@
+import AnnotatedMeter from 'grommet-addons/components/AnnotatedMeter'
 import Animate from 'grommet/components/Animate'
 import Button from 'grommet/components/Button'
 import Heading from 'grommet/components/Heading'
@@ -11,10 +12,10 @@ import { syncAction } from '../../../../stores/index'
 import { getAnimationSetting } from '../../../common/animation/animationSettings'
 import FullPage from '../../../common/FullPage/FullPage'
 import { routesDefinition } from '../../../routes/routes.def'
-import './customers-overview.sass'
 import CustomersOverview from './CustomersOverview'
-import { customersOverviewMessages } from './messages'
 import { customerOverviewHelpers } from './helpers'
+import { customersOverviewMessages } from './messages'
+import './customers-overview.sass'
 
 export type CustomersOverviewProps = RouteComponentProps<never> & {
   addCustomer: syncAction<CustomersStateType>
@@ -70,6 +71,7 @@ class CustomersOverviewContainer extends React.Component<
   }
 
   render() {
+    const customers = this.getCustomersList({ sortBy: 'customerLifetimeValue' })
     return (
       <FullPage className="customers-overview">
         <Animate enter={getAnimationSetting({})} keep={true}>
@@ -94,9 +96,18 @@ class CustomersOverviewContainer extends React.Component<
 
         <Animate enter={getAnimationSetting({ delay: 750 })} keep={true}>
           <CustomersOverview
-            list={this.getCustomersList({ sortBy: 'customerLifetimeValue' })}
+            list={customers}
             onSort={this.onSort}
             sortAscending={this.state.sortAscending}
+          />
+        </Animate>
+
+        <Animate enter={getAnimationSetting({ delay: 1000 })} keep={true}>
+          <AnnotatedMeter
+            type="bar"
+            size="small"
+            max={customers.length}
+            series={customerOverviewHelpers.getStats(customers)}
           />
         </Animate>
       </FullPage>

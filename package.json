@@ -24,6 +24,7 @@
     "fork-ts-checker-webpack-plugin": "^0.2.8",
     "fs-extra": "3.0.1",
     "grommet": "^1.10.1",
+    "grommet-addons": "^0.6.0",
     "html-webpack-plugin": "2.29.0",
     "jest": "22.1.4",
     "node-sass": "^4.9.0",
