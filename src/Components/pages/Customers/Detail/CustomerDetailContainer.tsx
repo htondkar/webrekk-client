@@ -2,7 +2,7 @@ import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 export type CustomerDetailContainerProps = RouteComponentProps<{
-  customerId: string
+  customerID: string
 }>
 
 class CustomerDetailContainer extends React.Component<
@@ -10,7 +10,7 @@ class CustomerDetailContainer extends React.Component<
   never
 > {
   render() {
-    return <div>CustomerDetailContainer</div>
+    return <div>CustomerDetailContainer | id: {this.props.match.params.customerID}</div>
   }
 }
 

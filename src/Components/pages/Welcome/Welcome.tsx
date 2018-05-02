@@ -1,23 +1,15 @@
-import Animate from 'grommet/components/Animate';
-import Button from 'grommet/components/Button';
-import Heading from 'grommet/components/Heading';
-import merge from 'ramda/es/merge';
-import * as React from 'react';
+import Animate from 'grommet/components/Animate'
+import Button from 'grommet/components/Button'
+import Heading from 'grommet/components/Heading'
+import * as React from 'react'
 
-import CenterContent from '../../common/CenterContent/CenterContent';
-import FullPage from '../../common/FullPage/FullPage';
-import { routesDefinition } from '../../routes/routes.def';
-import { welcomeMessages } from './messages';
+import { getAnimationSetting } from '../../common/animation/animationSettings'
+import CenterContent from '../../common/CenterContent/CenterContent'
+import FullPage from '../../common/FullPage/FullPage'
+import { routesDefinition } from '../../routes/routes.def'
+import { welcomeMessages } from './messages'
 
-import './welcome.sass';
-
-const defaultAnimation = {
-  animation: 'fade',
-  duration: 2000,
-  delay: 500,
-}
-
-const getAnimationSetting = merge(defaultAnimation)
+import './welcome.sass'
 
 const Welcome = () => (
   <FullPage className="welcome-page">
