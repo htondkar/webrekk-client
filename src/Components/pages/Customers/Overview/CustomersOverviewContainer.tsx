@@ -7,7 +7,7 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 
-import { CustomersStateType } from '../../../../models/Customer'
+import { CustomersStateType, ICustomer } from '../../../../models/Customer'
 import { syncAction } from '../../../../stores/index'
 import { getAnimationSetting } from '../../../common/animation/animationSettings'
 import FullPage from '../../../common/FullPage/FullPage'
@@ -51,6 +51,10 @@ class CustomersOverviewContainer extends React.Component<
 
   onSort = (index, sortAscending: boolean) => {
     this.setSort(sortAscending)
+  }
+
+  onCustomerSelect = (customer: ICustomer) => {
+    this.props.history.push(`${routesDefinition.customers.edit}/${customer.customerID}`)
   }
 
   getSearchSuggestions = () => {
@@ -99,6 +103,7 @@ class CustomersOverviewContainer extends React.Component<
             list={customers}
             onSort={this.onSort}
             sortAscending={this.state.sortAscending}
+            onCustomerSelect={this.onCustomerSelect}
           />
         </Animate>
 

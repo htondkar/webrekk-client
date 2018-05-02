@@ -9,15 +9,19 @@ type CustomersOverviewProps = {
   list: ICustomer[]
   onSort: (index: number, ascending: boolean) => void
   sortAscending: boolean
+  onCustomerSelect: (customer: ICustomer) => void
 }
 
 const CustomersOverview: React.SFC<CustomersOverviewProps> = ({
   list,
   onSort,
   sortAscending,
+  onCustomerSelect,
 }) => {
+  const onSelect = index => onCustomerSelect(list[index])
+
   return (
-    <Table>
+    <Table selectable={true} onSelect={onSelect}>
       <TableHeader
         labels={['ID', 'Name', 'Gender', 'Customer Value']}
         sortIndex={3}
