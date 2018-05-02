@@ -5,6 +5,7 @@
   "dependencies": {
     "@rematch/core": "^0.6.0",
     "@types/axios": "^0.14.0",
+    "@types/ramda": "^0.25.24",
     "@types/react-router": "^4.0.24",
     "@types/react-router-dom": "^4.2.6",
     "autoprefixer": "7.1.6",

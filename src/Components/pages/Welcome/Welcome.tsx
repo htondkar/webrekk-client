@@ -1,25 +1,28 @@
-import Animate from 'grommet/components/Animate'
-import Button from 'grommet/components/Button'
-import Heading from 'grommet/components/Heading'
-import * as React from 'react'
+import Animate from 'grommet/components/Animate';
+import Button from 'grommet/components/Button';
+import Heading from 'grommet/components/Heading';
+import merge from 'ramda/es/merge';
+import * as React from 'react';
 
-import CenterContent from '../../common/CenterContent/CenterContent'
-import FullPage from '../../common/FullPage/FullPage'
-import { routesDefinition } from '../../routes/routes.def'
-import { welcomeMessages } from './messages'
-import './welcome.sass'
+import CenterContent from '../../common/CenterContent/CenterContent';
+import FullPage from '../../common/FullPage/FullPage';
+import { routesDefinition } from '../../routes/routes.def';
+import { welcomeMessages } from './messages';
 
-const getAnimationSetting = (extra = {}) => ({
+import './welcome.sass';
+
+const defaultAnimation = {
   animation: 'fade',
   duration: 2000,
   delay: 500,
-  ...extra,
-})
+}
+
+const getAnimationSetting = merge(defaultAnimation)
 
 const Welcome = () => (
   <FullPage className="welcome-page">
     <CenterContent>
-      <Animate enter={getAnimationSetting()} keep={true}>
+      <Animate enter={getAnimationSetting({})} keep={true}>
         <Heading uppercase={true} strong={false} tag="h3" margin="large">
           {welcomeMessages.title}
         </Heading>
