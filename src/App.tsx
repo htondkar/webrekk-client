@@ -1,22 +1,21 @@
-import * as React from 'react';
-import './App.css';
+import * as React from 'react'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
-import logo from './logo.svg';
+import CustomerDetailContainer from './Components/pages/Customers/Detail/CustomerDetailContainer'
+import CustomersOverviewContainer from './Components/pages/Customers/Overview/CustomersOverviewContainer'
+import Welcome from './Components/pages/Welcome/Welcome';
 
-class App extends React.Component {
-  public render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
-}
+import './styles/index.scss'
+import 'grommet/scss/vanilla/index.scss'
 
-export default App;
+const App: React.SFC<{}> = () => (
+  <Router>
+    <Switch>
+      <Route path="/" exact={true} component={Welcome} />
+      <Route path="/customers" exact={true} component={CustomersOverviewContainer} />
+      <Route path="/customers/:customerId" component={CustomerDetailContainer} />
+    </Switch>
+  </Router>
+)
+
+export default App

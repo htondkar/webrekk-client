@@ -199,6 +199,9 @@ module.exports = {
               },
               {
                 loader: 'sass-loader', // compiles Sass to CSS, leaves css untouched
+                options: {
+                  includePaths: ['./node_modules', './node_modules/grommet/node_modules'],
+                },
               },
             ],
           },
