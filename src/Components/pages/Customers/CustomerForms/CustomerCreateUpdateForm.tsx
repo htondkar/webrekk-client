@@ -6,13 +6,13 @@ import Select from 'grommet/components/Select'
 import TextInput from 'grommet/components/TextInput'
 import * as React from 'react'
 import { Field, reduxForm } from 'redux-form'
-import { required } from 'redux-form-validators'
+import { required, date } from 'redux-form-validators'
 
 import fieldAdapter from '../../../common/FormFields/FieldAdapter'
 import './customer-form.sass'
 
 const handleSelectOutput = selectedOption =>
-  selectedOption ? selectedOption.option : undefined
+  selectedOption ? selectedOption.option.value : undefined
 
 const CustomerCreateUpdateForm = ({ handleSubmit, editMode, onRemove }) => (
   <Form onSubmit={handleSubmit} className="customer-form">
@@ -53,7 +53,7 @@ const CustomerCreateUpdateForm = ({ handleSubmit, editMode, onRemove }) => (
       useCustomChangeHandler={true}
       component={fieldAdapter(DateTime)}
       label="Birthday"
-      validate={[required()]}
+      validate={[required(), date({ format: 'yyyy-mm-dd' })]}
       extra={{ format: 'YYYY-MM-DD' }}
     />
 

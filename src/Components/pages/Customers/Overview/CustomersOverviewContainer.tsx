@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 import { CustomersStateType, ICustomer } from '../../../../models/Customer'
-import { syncAction } from '../../../../stores/index'
+import { syncAction, aSyncAction } from '../../../../stores/index'
 import { getAnimationSetting } from '../../../common/animation/animationSettings'
 import FullPage from '../../../common/FullPage/FullPage'
 import { routesDefinition } from '../../../routes/routes.def'
@@ -16,9 +16,11 @@ import CustomersOverview from './CustomersOverview'
 import { customerOverviewHelpers } from './helpers'
 import { customersOverviewMessages } from './messages'
 import './customers-overview.sass'
+import Loading from '../../../common/Loading/Loading'
 
 export type CustomersOverviewProps = RouteComponentProps<never> & {
   addCustomer: syncAction<CustomersStateType>
+  fetchAllCustomers: aSyncAction<void>
   Customer: CustomersStateType
 }
 
@@ -34,6 +36,7 @@ class CustomersOverviewContainer extends React.Component<
   constructor(props) {
     super(props)
     this.state = { search: '', sortAscending: false }
+    this.props.fetchAllCustomers()
   }
 
   setSearchTerm = term => this.setState({ search: term })
@@ -76,6 +79,8 @@ class CustomersOverviewContainer extends React.Component<
 
   render() {
     const customers = this.getCustomersList({ sortBy: 'customerLifetimeValue' })
+    const { isLoading } = this.props.Customer
+
     return (
       <FullPage className="customers-overview">
         <Animate enter={getAnimationSetting({})} keep={true}>
@@ -99,12 +104,16 @@ class CustomersOverviewContainer extends React.Component<
         </Animate>
 
         <Animate enter={getAnimationSetting({ delay: 750 })} keep={true}>
-          <CustomersOverview
-            list={customers}
-            onSort={this.onSort}
-            sortAscending={this.state.sortAscending}
-            onCustomerSelect={this.onCustomerSelect}
-          />
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <CustomersOverview
+              list={customers}
+              onSort={this.onSort}
+              sortAscending={this.state.sortAscending}
+              onCustomerSelect={this.onCustomerSelect}
+            />
+          )}
         </Animate>
 
         <Animate enter={getAnimationSetting({ delay: 1000 })} keep={true}>
@@ -124,8 +133,9 @@ const mapState = state => ({
   Customer: state.Customer,
 })
 
-const mapDispatch = ({ Customer: { addCustomer } }) => ({
+const mapDispatch = ({ Customer: { addCustomer, fetchAllCustomers } }) => ({
   addCustomer,
+  fetchAllCustomers,
 })
 
 const connector = connect<{ Customer: CustomersStateType }, {}, CustomersOverviewProps>(

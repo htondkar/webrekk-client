@@ -1,5 +1,6 @@
 import sampleData from '../data/sampleData'
-import { syncAction } from '../stores/index'
+import { syncAction, aSyncAction } from '../stores/index'
+import api from '../api/api'
 
 export const genderDict = {
   m: 'Male',
@@ -12,24 +13,24 @@ export interface ICustomer {
   customerLifetimeValue: number
   gender: string | 'm' | 'w'
   lastContact: string | null
-  name: {
-    first: string
-    last: string
-  }
+  firstName: string
+  lastName: string
 }
 
 export type CustomersStateType = {
   customers: ICustomer[]
+  isLoading: boolean
 }
 
 export type CustomerStoreType = {
   state: CustomersStateType
   reducers: { [key: string]: syncAction<CustomersStateType> }
-  effects: { [key: string]: syncAction<CustomersStateType> }
+  effects: { [key: string]: aSyncAction<CustomersStateType> }
 }
 
 export const Customer: CustomerStoreType = {
   state: {
+    isLoading: false,
     customers: sampleData,
   },
   reducers: {
@@ -41,6 +42,31 @@ export const Customer: CustomerStoreType = {
       console.log(customerID, data)
       return state
     },
+    replaceCustomers(state, customers) {
+      return { ...state, customers }
+    },
+    startLoading(state, payload) {
+      return {
+        ...state,
+        isLoading: true,
+      }
+    },
+    endLoading(state, payload) {
+      return {
+        ...state,
+        isLoading: false,
+      }
+    },
   },
-  effects: {},
+  effects: {
+    async fetchAllCustomers() {
+      this.startLoading()
+
+      const response = await api.getAllCustomers()
+      const customers = response.data as ICustomer[]
+      this.replaceCustomers(customers)
+
+      this.endLoading()
+    },
+  },
 }

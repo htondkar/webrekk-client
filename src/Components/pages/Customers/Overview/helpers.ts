@@ -12,13 +12,13 @@ export const customerOverviewHelpers = {
   ): Array<{ value: number; label: string }> {
     return customerList
       .filter(customer =>
-        `${customer.name.first} ${customer.name.last}`
+        `${customer.firstName} ${customer.lastName}`
           .toLowerCase()
           .includes(search.toLowerCase())
       )
       .map(customer => ({
         value: customer.customerID,
-        label: `${customer.name.first} ${customer.name.last}`,
+        label: `${customer.firstName} ${customer.lastName}`,
       }))
   },
 

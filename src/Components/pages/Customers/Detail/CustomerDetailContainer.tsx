@@ -8,10 +8,13 @@ import { customerDetailMessages } from './messages'
 import CustomerCreateUpdateForm from '../CustomerForms/CustomerCreateUpdateForm'
 import { connect } from 'react-redux'
 import { CustomersStateType } from '../../../../models/Customer'
+import evolve from 'ramda/es/evolve'
 
 import './edit-customer.sass'
 import api from '../../../../api/api'
 import UserNotifier from '../../../../Notification/Notification'
+import { parseServerErrors } from '../../../../helpers/formHelpers'
+import { SubmissionError } from 'redux-form'
 
 export type CustomerDetailContainerProps = {
   Customer: CustomersStateType
@@ -23,12 +26,21 @@ class CustomerDetailContainer extends React.Component<
   CustomerDetailContainerProps,
   never
 > {
+  preProcessValues = evolve({
+    birthday: value => new Date(value).toISOString(),
+  })
+
   onSubmit = async values => {
     try {
-      await api.editCustomer(this.props.match.params.customerID, values)
+      await api.editCustomer(
+        this.props.match.params.customerID,
+        this.preProcessValues(values)
+      )
       UserNotifier.withSuccess(customerDetailMessages.editCustomerSuccess)
     } catch (error) {
       UserNotifier.withError(customerDetailMessages.editCustomerFail)
+      const errors = parseServerErrors(error.response.data.message)
+      throw new SubmissionError(errors)
     }
   }
 
@@ -51,10 +63,11 @@ class CustomerDetailContainer extends React.Component<
       return {}
     }
 
+    const birthdayDate = new Date(theCustomer.birthday)
+    const birthday = `${birthdayDate.getFullYear()}-${birthdayDate.getMonth()}-${birthdayDate.getDate()}`
     return {
       ...theCustomer,
-      firstName: theCustomer.name.first,
-      lastName: theCustomer.name.last,
+      birthday,
     }
   }
 

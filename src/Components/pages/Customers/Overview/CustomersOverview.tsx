@@ -24,7 +24,6 @@ const CustomersOverview: React.SFC<CustomersOverviewProps> = ({
     <Table selectable={true} onSelect={onSelect}>
       <TableHeader
         labels={['ID', 'Name', 'Gender', 'Customer Value']}
-        sortIndex={3}
         onSort={onSort}
         sortAscending={sortAscending}
       />
@@ -33,7 +32,7 @@ const CustomersOverview: React.SFC<CustomersOverviewProps> = ({
         {list.map(customer => (
           <TableRow key={customer.customerID}>
             <td>{customer.customerID}</td>
-            <td>{`${customer.name.first} ${customer.name.last}`}</td>
+            <td>{`${customer.firstName} ${customer.lastName}`}</td>
             <td>{genderDict[customer.gender]}</td>
             <td>{customer.customerLifetimeValue}</td>
           </TableRow>
