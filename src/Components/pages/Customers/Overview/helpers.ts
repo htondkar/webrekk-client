@@ -21,6 +21,7 @@ export const customerOverviewHelpers = {
         label: `${customer.name.first} ${customer.name.last}`,
       }))
   },
+
   sort(
     customers: ICustomer[],
     sortByKey: keyof ICustomer,
@@ -34,19 +35,15 @@ export const customerOverviewHelpers = {
 
     return customers.sort(sorter)
   },
-  getStats(customers: ICustomer[]) {
-    const { m, w } = compose(countBy(toLower), map(prop('gender')))(customers)
-    return [
-      {
-        value: m,
-        label: 'Male',
-        colorIndex: 'graph-1',
-      },
-      {
-        value: w,
-        label: 'Female',
-        colorIndex: 'graph-2',
-      },
-    ]
-  },
+
+  getStats: compose(
+    map(([gender, count]) => ({
+      value: count,
+      label: gender,
+      colorIndex: gender === 'm' ? 'graph-1' : 'graph-2',
+    })),
+    Object.entries,
+    countBy(toLower),
+    map(prop('gender'))
+  ),
 }
