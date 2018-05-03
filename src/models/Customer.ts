@@ -36,6 +36,11 @@ export const Customer: CustomerStoreType = {
     addCustomer(state, payload: ICustomer) {
       return { ...state, customers: [...state.customers, payload] }
     },
+    editCustomer(state, payload) {
+      const { customerID, ...data } = payload
+      console.log(customerID, data)
+      return state
+    },
   },
   effects: {},
 }

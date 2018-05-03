@@ -1,3 +1,31 @@
 .grommetux-search__suggestions {
   background-color: #808080 !important;
 }
+
+$light-color: #e0e0e0;
+
+.grommetux-form-field {
+  background-color: transparent;
+  color: $light-color;
+
+  &__label {
+    color: $light-color;
+  }
+}
+
+.grommetux-select__control svg {
+  background-color: transparent;
+}
+
+.grommet.grommetux-drop {
+  background-color: #303030 !important;
+  border: 1px solid #a0a0a0 !important;
+}
+
+.grommetux-select__drop .grommetux-select__option {
+  color: $light-color !important;
+}
+
+.grommetux-select__input[readonly] {
+  color: $light-color !important;
+}
