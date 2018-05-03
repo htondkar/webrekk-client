@@ -14,7 +14,7 @@ import './customer-form.sass'
 const handleSelectOutput = selectedOption =>
   selectedOption ? selectedOption.option : undefined
 
-const CustomerCreateUpdateForm = ({ handleSubmit, editMode }) => (
+const CustomerCreateUpdateForm = ({ handleSubmit, editMode, onRemove }) => (
   <Form onSubmit={handleSubmit} className="customer-form">
     <Field
       name="firstName"
@@ -59,6 +59,15 @@ const CustomerCreateUpdateForm = ({ handleSubmit, editMode }) => (
 
     <Footer pad={{ vertical: 'medium' }}>
       <Button label={editMode ? 'Save' : 'Create'} type="submit" />
+      {editMode && (
+        <Button
+          label="Delete"
+          secondary={true}
+          plain={true}
+          type="button"
+          onClick={onRemove}
+        />
+      )}
     </Footer>
   </Form>
 )

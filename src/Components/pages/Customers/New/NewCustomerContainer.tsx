@@ -7,6 +7,8 @@ import './new-customer.sass'
 import { getAnimationSetting } from '../../../common/animation/animationSettings'
 import { newCustomerMessages } from './messages'
 import CustomerCreateUpdateForm from '../CustomerForms/CustomerCreateUpdateForm'
+import api from '../../../../api/api'
+import UserNotifier from '../../../../Notification/Notification'
 
 type NewCustomerContainerProps = {}
 
@@ -14,8 +16,14 @@ export default class NewCustomerContainer extends React.Component<
   NewCustomerContainerProps,
   any
 > {
-  onSubmit = values => {
-    console.log(values)
+  onSubmit = async values => {
+    try {
+      await api.createNewCustomer(values)
+      UserNotifier.withSuccess(newCustomerMessages.newCustomerSuccess)
+    } catch (error) {
+      UserNotifier.withSuccess(newCustomerMessages.newCustomerFail)
+      console.log(error)
+    }
   }
 
   render() {

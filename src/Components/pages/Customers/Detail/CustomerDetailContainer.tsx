@@ -10,6 +10,8 @@ import { connect } from 'react-redux'
 import { CustomersStateType } from '../../../../models/Customer'
 
 import './edit-customer.sass'
+import api from '../../../../api/api'
+import UserNotifier from '../../../../Notification/Notification'
 
 export type CustomerDetailContainerProps = {
   Customer: CustomersStateType
@@ -21,11 +23,25 @@ class CustomerDetailContainer extends React.Component<
   CustomerDetailContainerProps,
   never
 > {
-  onSubmit = values => {
-    console.log(values)
+  onSubmit = async values => {
+    try {
+      await api.editCustomer(this.props.match.params.customerID, values)
+      UserNotifier.withSuccess(customerDetailMessages.editCustomerSuccess)
+    } catch (error) {
+      UserNotifier.withError(customerDetailMessages.editCustomerFail)
+    }
   }
 
-  getInitialState = () => {
+  removeCustomer = async () => {
+    try {
+      await api.removeCustomer(this.props.match.params.customerID)
+      UserNotifier.withSuccess(customerDetailMessages.removeSuccess)
+    } catch (error) {
+      UserNotifier.withError(customerDetailMessages.removeFail)
+    }
+  }
+
+  getInitialValues = () => {
     const finder = customer =>
       customer.customerID === parseInt(this.props.match.params.customerID, 10)
     const theCustomer = this.props.Customer.customers.find(finder)
@@ -51,8 +67,9 @@ class CustomerDetailContainer extends React.Component<
         <Animate enter={getAnimationSetting({ delay: 750 })} keep={true}>
           <CustomerCreateUpdateForm
             onSubmit={this.onSubmit}
-            initialValues={this.getInitialState()}
+            initialValues={this.getInitialValues()}
             editMode={true}
+            onRemove={this.removeCustomer}
           />
         </Animate>
       </FullPage>
