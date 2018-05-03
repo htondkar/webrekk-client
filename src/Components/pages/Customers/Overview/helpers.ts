@@ -1,9 +1,5 @@
 import { ICustomer } from '../../../../models/Customer'
-import compose from 'ramda/es/compose'
-import map from 'ramda/es/map'
-import countBy from 'ramda/es/countBy'
-import prop from 'ramda/es/prop'
-import toLower from 'ramda/es/toLower'
+import { compose, map, countBy, prop, toLower } from 'ramda'
 
 export const customerOverviewHelpers = {
   search(

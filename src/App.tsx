@@ -1,8 +1,8 @@
 import 'grommet/scss/vanilla/index.scss'
 import * as React from 'react'
+import Notifications from 'react-notify-toast'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import Notifications from 'react-notify-toast'
 
 import CustomerDetailContainer from './Components/pages/Customers/Detail/CustomerDetailContainer'
 import NewCustomerContainer from './Components/pages/Customers/New/NewCustomerContainer'

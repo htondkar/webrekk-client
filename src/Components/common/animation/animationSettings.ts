@@ -1,4 +1,4 @@
-import merge from 'ramda/es/merge'
+import { merge } from 'ramda'
 
 const defaultAnimation = {
   animation: 'fade',

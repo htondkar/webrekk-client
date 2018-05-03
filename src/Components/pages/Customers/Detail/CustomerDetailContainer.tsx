@@ -8,7 +8,7 @@ import { customerDetailMessages } from './messages'
 import CustomerCreateUpdateForm from '../CustomerForms/CustomerCreateUpdateForm'
 import { connect } from 'react-redux'
 import { CustomersStateType } from '../../../../models/Customer'
-import evolve from 'ramda/es/evolve'
+import { evolve } from 'ramda'
 
 import './edit-customer.sass'
 import api from '../../../../api/api'
