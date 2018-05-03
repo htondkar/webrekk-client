@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios'
-import { GlobalSettings } from '../../settings'
+import { GlobalSettings } from '../settings'
 
 class Api {
   private readonly http: AxiosInstance

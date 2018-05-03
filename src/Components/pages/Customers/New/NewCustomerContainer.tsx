@@ -9,17 +9,24 @@ import { newCustomerMessages } from './messages'
 import CustomerCreateUpdateForm from '../CustomerForms/CustomerCreateUpdateForm'
 import api from '../../../../api/api'
 import UserNotifier from '../../../../Notification/Notification'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
 
-type NewCustomerContainerProps = {}
+type NewCustomerContainerProps = RouteComponentProps<never>
 
-export default class NewCustomerContainer extends React.Component<
-  NewCustomerContainerProps,
-  any
-> {
+class NewCustomerContainer extends React.Component<NewCustomerContainerProps, any> {
+  preProcessFormValues = values => ({
+    ...values,
+    name: {
+      first: values.firstName,
+      last: values.lastName,
+    },
+  })
+
   onSubmit = async values => {
     try {
-      await api.createNewCustomer(values)
+      await api.createNewCustomer(this.preProcessFormValues(values))
       UserNotifier.withSuccess(newCustomerMessages.newCustomerSuccess)
+      this.props.history.push('/customers')
     } catch (error) {
       UserNotifier.withSuccess(newCustomerMessages.newCustomerFail)
       console.log(error)
@@ -40,3 +47,5 @@ export default class NewCustomerContainer extends React.Component<
     )
   }
 }
+
+export default withRouter(NewCustomerContainer)

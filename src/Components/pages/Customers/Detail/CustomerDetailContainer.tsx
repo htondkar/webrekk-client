@@ -36,6 +36,7 @@ class CustomerDetailContainer extends React.Component<
     try {
       await api.removeCustomer(this.props.match.params.customerID)
       UserNotifier.withSuccess(customerDetailMessages.removeSuccess)
+      this.props.history.push('/customers')
     } catch (error) {
       UserNotifier.withError(customerDetailMessages.removeFail)
     }
